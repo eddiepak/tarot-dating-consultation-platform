@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { TarotCard } from '../types';
 
+const REVEAL_DELAY = 1000;
+
 interface CardSelectionProps {
   cards: TarotCard[];
   onComplete: (selectedCards: TarotCard[]) => void;
@@ -21,7 +23,7 @@ export default function CardSelection({ cards, onComplete, onBack, categoryTitle
         setIsRevealing(true);
         setTimeout(() => {
           onComplete(newSelection);
-        }, 1000);
+        }, REVEAL_DELAY);
       }
     }
   };

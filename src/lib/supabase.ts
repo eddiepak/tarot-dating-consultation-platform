@@ -1,10 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
 
-// These should be replaced with actual Supabase credentials
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://your-project.supabase.co';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'your-anon-key';
+// These must be set via environment variables
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = supabaseUrl && supabaseAnonKey 
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null;
 
 // Database types
 export interface ConsultationRecord {
@@ -18,6 +20,11 @@ export interface ConsultationRecord {
 
 // Save consultation to Supabase
 export async function saveConsultation(consultation: ConsultationRecord) {
+  if (!supabase) {
+    console.warn('Supabase not configured. Skipping save.');
+    return { success: false, error: 'Supabase not configured' };
+  }
+  
   try {
     const { data, error } = await supabase
       .from('consultations')
@@ -34,6 +41,11 @@ export async function saveConsultation(consultation: ConsultationRecord) {
 
 // Get consultation history
 export async function getConsultationHistory(limit = 10) {
+  if (!supabase) {
+    console.warn('Supabase not configured. Skipping fetch.');
+    return { success: false, error: 'Supabase not configured' };
+  }
+  
   try {
     const { data, error } = await supabase
       .from('consultations')
