@@ -1,4 +1,3 @@
-import React from 'react';
 import { ConsultationCategory as CategoryType } from '../types';
 
 interface CategorySelectorProps {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import CategorySelector from './components/CategorySelector';
 import CardSelection from './components/CardSelection';
 import ResultsDisplay from './components/ResultsDisplay';
